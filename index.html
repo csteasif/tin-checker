@@ -108,8 +108,8 @@ async function checkTIN() {
   try {
     const res = await fetch("data.json");
     const data = await res.json();
-
-    const found = data.find(item => item.tin === tin);
+	const found = data.find(item =>
+  String(item.tin).trim() === String(tin).trim());
 
     resultBox.style.display = "block";
 
@@ -178,6 +178,9 @@ async function checkTIN() {
     resultBox.innerText = "Error loading data.json";
   }
 }
+
+
+
 </script>
 
 </body>
