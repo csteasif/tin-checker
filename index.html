@@ -8,42 +8,45 @@
 <style>
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
-  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: #0b1220;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
 }
 
-.container {
-  background: #fff;
+.wrapper {
+  width: 420px;
+  background: #111a2e;
   padding: 30px;
-  border-radius: 16px;
-  width: 350px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  text-align: center;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
-h2 {
+.header {
+  text-align: center;
   margin-bottom: 20px;
-  color: #333;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.header p {
+  font-size: 13px;
+  opacity: 0.7;
 }
 
 input {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: none;
   outline: none;
-  font-size: 14px;
-  margin-bottom: 15px;
-  transition: 0.3s;
-}
-
-input:focus {
-  border-color: #2a5298;
-  box-shadow: 0 0 5px rgba(42,82,152,0.5);
+  margin-bottom: 12px;
 }
 
 button {
@@ -51,44 +54,45 @@ button {
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #2a5298;
+  background: #3b82f6;
   color: white;
-  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
-  background: #1e3c72;
+  background: #2563eb;
 }
 
 .result {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 14px;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 8px;
   display: none;
 }
 
 .success {
-  background: #e6f9ec;
-  color: #1b7a3f;
+  background: #0f2f1c;
+  border: 1px solid #22c55e;
 }
 
 .error {
-  background: #fdeaea;
-  color: #a94442;
+  background: #2a1212;
+  border: 1px solid #ef4444;
 }
 </style>
-
 </head>
+
 <body>
 
-<div class="container">
-  <h2>🔍 TIN Checker for AY 2023-2024</h2>
+<div class="wrapper">
+  <div class="header">
+    <h2>TIN Verification System</h2>
+    <p>Check your Tax Identification Number instantly</p>
+  </div>
 
   <input type="text" id="tinInput" placeholder="Enter TIN number">
-  <button onclick="checkTIN()">Check TIN</button>
+  <button onclick="checkTIN()">Verify</button>
 
   <div id="result" class="result"></div>
 </div>
