@@ -149,6 +149,10 @@ async function checkTIN() {
     console.log("Loaded JSON data:", data);
 
     const found = data.find(item => String(item.tin) === tin);
+	
+	const found = data.find(item =>
+  String(item.tin).trim() === tin.trim()
+);
 
     // 🔍 DEBUG 4: check match result
     console.log("Matched record:", found);
