@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TIN Checker</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 350px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #2a5298;
+  box-shadow: 0 0 5px rgba(42,82,152,0.5);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2a5298;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1e3c72;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: none;
+}
+
+.success {
+  background: #e6f9ec;
+  color: #1b7a3f;
+}
+
+.error {
+  background: #fdeaea;
+  color: #a94442;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>🔍 TIN Checker</h2>
+
+  <input type="text" id="tinInput" placeholder="Enter TIN number">
+  <button onclick="checkTIN()">Check TIN</button>
+
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+async function checkTIN() {
+  const tin = document.getElementById("tinInput").value.trim();
+  const resultBox = document.getElementById("result");
+
+  if (!tin) {
+    resultBox.style.display = "block";
+    resultBox.className = "result error";
+    resultBox.innerText = "Please enter a TIN number.";
+    return;
+  }
+
+  try {
+    const res = await fetch("data.json");
+    const data = await res.json();
+
+    const found = data.find(item => item.tin === tin);
+
+    resultBox.style.display = "block";
+
+    if (found) {
+      resultBox.className = "result success";
+      resultBox.innerHTML = `
+        <strong>Name:</strong> ${found.name}<br>
+        <strong>Status:</strong> ${found.status}
+      `;
+    } else {
+      resultBox.className = "result error";
+      resultBox.innerText = "TIN not found.";
+    }
+
+  } catch (err) {
+    resultBox.style.display = "block";
+    resultBox.className = "result error";
+    resultBox.innerText = "Error loading data.";
+  }
+}
+</script>
+
+</body>
+</html>
