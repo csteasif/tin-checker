@@ -96,94 +96,48 @@ button:hover {
 <script>
 async function checkTIN() {
   const tin = document.getElementById("tinInput").value.trim();
-  const resultBox = document.getElementById("result");
 
-  if (!tin) {
-    resultBox.style.display = "block";
-    resultBox.className = "result error";
-    resultBox.innerText = "Please enter a TIN number.";
-    return;
-  }
-
-  try {
-    const res = await fetch("data.json");
-    const data = await res.json();
-	const found = data.find(item =>
-  String(item.tin).trim() === String(tin).trim());
-
-    resultBox.style.display = "block";
-
-    if (found) {
-      resultBox.className = "result success";
-      resultBox.innerHTML = `
-        <strong>Name:</strong> ${found.name}<br>
-        <strong>Status:</strong> ${found.status}
-      `;
-    } else {
-      resultBox.className = "result error";
-      resultBox.innerText = "TIN not found.";
-    }
-
-  } catch (err) {
-    resultBox.style.display = "block";
-    resultBox.className = "result error";
-    resultBox.innerText = "Error loading data.";
-  }
-}
-
-async function checkTIN() {
-  const tin = document.getElementById("tinInput").value.trim();
-
-  // 🔍 DEBUG 1: check input value
   console.log("Entered TIN:", tin);
 
+  const resultBox = document.getElementById("result");
+
   try {
     const res = await fetch("data.json");
-
-    // 🔍 DEBUG 2: check fetch response
-    console.log("Fetch status:", res.status);
-
     const data = await res.json();
 
-    // 🔍 DEBUG 3: check loaded data
     console.log("Loaded JSON data:", data);
 
-    const found = data.find(item => String(item.tin) === tin);
-	
-	const found = data.find(item =>
-  String(item.tin).trim() === tin.trim()
-);
+    // ✅ Normalize helper
+    const normalize = (v) => String(v).trim();
 
-    // 🔍 DEBUG 4: check match result
+    // ✅ Correct matching logic for string array
+    const found = data.find(item =>
+      normalize(item) === normalize(tin)
+    );
+
     console.log("Matched record:", found);
 
-    const resultBox = document.getElementById("result");
+    resultBox.style.display = "block";
 
     if (found) {
-      resultBox.style.display = "block";
       resultBox.className = "result success";
       resultBox.innerHTML = `
-        <strong>Name:</strong> ${found.name}<br>
-        <strong>Status:</strong> ${found.status}
+        <strong>✅ TIN Found</strong><br>
+        ${found}
       `;
     } else {
-      resultBox.style.display = "block";
       resultBox.className = "result error";
-      resultBox.innerText = "TIN not found";
+      resultBox.innerText = "❌ TIN not found";
     }
 
   } catch (error) {
-    // 🔥 DEBUG 5: catch errors
-    console.log("Error occurred:", error);
+    console.log("Error:", error);
 
-    const resultBox = document.getElementById("result");
     resultBox.style.display = "block";
     resultBox.className = "result error";
     resultBox.innerText = "Error loading data.json";
   }
 }
-
-
 
 </script>
 
